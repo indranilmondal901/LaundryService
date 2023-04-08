@@ -1,6 +1,7 @@
 exports.registerController = async()=> {
     try {
-        
+        const {name,email,password} = req.body
+        //test it
     } catch (error) {
         
     }
