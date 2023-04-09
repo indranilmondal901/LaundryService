@@ -39,6 +39,14 @@ const orderSchema = mongoose.Schema({
             orderedAt: {
                 type: Date,
                 default: Date.now()
+            },
+            orderStatus:{
+                type:String,
+                default:"Ready to pickup"
+            },
+            _id:{
+                type:String,
+                required:true
             }
         }],
         required: true

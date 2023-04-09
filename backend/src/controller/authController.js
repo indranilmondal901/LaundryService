@@ -32,6 +32,7 @@ exports.registerController = async (req, res) => {
         })
     }
 }
+
 exports.loginController = async (req, res) => {
     try {
         const enteredUsername = req.body.username;

@@ -25,6 +25,8 @@ exports.startOrderController=async(req,res)=>{
 exports.createOrderController=async(req,res)=>{
     const {_id}=req.user;
     const {order,total_price}=req.body;
+    const id = Math.floor(Math.random() * 9000000) + 1000000;
+    
     try {
         await Orders.updateOne(
             { user_id: _id },
@@ -32,7 +34,8 @@ exports.createOrderController=async(req,res)=>{
               $push: {
                 orders: {
                   order: order,
-                  total_price: total_price
+                  total_price: total_price,
+                  _id:"OD".concat(id)
                 }
               }
             },
@@ -48,7 +51,7 @@ exports.createOrderController=async(req,res)=>{
     }
 }
 
-exports.getAllOrders=async(req,res)=>{
+exports.getAllOrdersController=async(req,res)=>{
     const {_id}=req.user;
     try {
         const orders=await Orders.find({user_id:_id});
@@ -58,5 +61,24 @@ exports.getAllOrders=async(req,res)=>{
             message:error.message
         })
     }
+}
 
+exports.cancelOrderController=async(req,res)=>{
+    const {id}=req.params;
+    const {_id:user_id} =req.user;
+    try {
+        const updateOrder=await Orders.findOneAndUpdate({user_id,"orders._id":id},{$set:{'orders.$.orderStatus':'Cancelled'}},{new:true});
+        if(!updateOrder){
+            return res.status(404).send({
+                message:"OrderId does not matched"
+            })
+        }
+        res.status(200).send({
+            message:"Order cancelled successfully"
+        })
+    }catch(error) {
+        res.status(200).send({
+            message:error.message
+        })
+    }
 }
