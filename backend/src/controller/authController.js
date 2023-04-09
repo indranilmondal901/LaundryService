@@ -74,10 +74,8 @@ exports.logoutController = async (req, res) => {
     try {
         console.log(`this user is logged out ==> ${req.user.name}`)
         //logout from all devices
-        console.log(req.user.tokens)
         req.user.tokens = [];
         await req.user.save();
-        console.log(req.user.tokens)
         res.status(200).send({
             msg: "logout Sucessfully"
         })
