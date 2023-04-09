@@ -12,14 +12,18 @@ exports.registerController = async (req, res) => {
                 message: "Email already exist"
             })
         } else {
+            // const fullAddress = `${req.body.address},${req.body.state},${req.body.district},pin-${req.body.pincode}`
             const userData = new customer({
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                phone: req.body.phone,
+                address:[{
+                    add: `${req.body.address},${req.body.district},${req.body.state},pin-${req.body.pincode}`
+                }]
             })
             //hashing before save
             //save into db
-            console.log(userData);
             await userData.save();
             res.status(200).send({
                 status: "sucessfully registered",
@@ -51,7 +55,7 @@ exports.loginController = async (req, res) => {
         const checkPassword = await bcrypt.compare(enteredPassword, loginUserData.password);
         if (checkPassword) {
             const token = await loginUserData.generateAuthToken(loginUserData);
-            console.log(` logintoken from rout.js==> ${token}`)
+            // console.log(` logintoken from rout.js==> ${token}`)
             res.status(200).send({
                 status: "login successfully",
                 token: token,
@@ -73,12 +77,10 @@ exports.loginController = async (req, res) => {
 
 exports.logoutController = async (req, res) => {
     try {
-        console.log(`this user is logged out ==> ${req.user.name}`)
+        // console.log(`this user is logged out ==> ${req.user.name}`)
         //logout from all devices
-        console.log(req.user.tokens)
         req.user.tokens = [];
         await req.user.save();
-        console.log(req.user.tokens)
         res.status(200).send({
             msg: "logout Sucessfully"
         })
