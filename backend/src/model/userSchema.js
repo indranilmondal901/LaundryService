@@ -19,6 +19,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    phone:{
+        type:Number,
+        required: true
+    },
+    address: [{
+        add: {
+            type: String,
+            required: true
+        }
+    }],
     tokens: [{
         token: {
             type: String,
@@ -39,7 +49,7 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.generateAuthToken = async (loginUser) => {
     console.log(loginUser);
     try {
-        const token = jwt.sign({ _id: loginUser._id}, process.env.SECRET_KEY);
+        const token = jwt.sign({ _id: loginUser._id }, process.env.SECRET_KEY);
         console.log(token);
         loginUser.tokens = await loginUser.tokens.concat({ token: token })
         await loginUser.save();
