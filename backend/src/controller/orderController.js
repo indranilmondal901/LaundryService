@@ -1,18 +1,17 @@
 const mongoose=require('mongoose');
 
 const Orders=require('../model/orderSchema')
-const Users=require('../model/userSchema')
 
 exports.startOrderController=async(req,res)=>{
+    const {_id,name} =req.user;
     try {
-        const existUser=await Orders.find({user_id:req.user_id})
+        const existUser=await Orders.findOne({user_id:_id})
         if(existUser){
             return res.status(400).send({
                 message:"User is already register for create a order"
             })
         }
-        const user=await Users.findById({_id:req.user_id});
-        await Orders.create({user_name:user.name,user_id:req.user_id})
+        await Orders.create({user_name:name,user_id:_id})
         res.status(200).send({
             message:"Now user can create a order"
         })
@@ -24,10 +23,21 @@ exports.startOrderController=async(req,res)=>{
 }
 
 exports.createOrderController=async(req,res)=>{
-    const user_id=req.user_id;
-    const {orders} =req.body;
+    const {_id}=req.user;
+    const {order,total_price}=req.body;
     try {
-        await Orders.findOneAndUpdate(user_id,{$addToSet:{'orders':[{orders,orderedAt:Date.now}]}})
+        await Orders.updateOne(
+            { user_id: _id },
+            {
+              $push: {
+                orders: {
+                  order: order,
+                  total_price: total_price
+                }
+              }
+            },
+            { upsert: true, runValidators: true }
+          );
         res.status(200).send({
             message:"Order created successfully"
         })
@@ -39,10 +49,10 @@ exports.createOrderController=async(req,res)=>{
 }
 
 exports.getAllOrders=async(req,res)=>{
-    const user_id=req.user_id;
+    const {_id}=req.user;
     try {
-        const orders=await Orders.find({user_id});
-        res.status(200).send(orders.orders)
+        const orders=await Orders.find({user_id:_id});
+        res.status(200).send(orders)
     } catch (error) {
         res.status(500).send({
             message:error.message
