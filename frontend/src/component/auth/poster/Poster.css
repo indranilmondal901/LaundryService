@@ -1,0 +1,47 @@
+#posterHeading {
+    top: 230px;
+    left: 152px;
+    width: 411px;
+    height: 257px;
+    text-align: left;
+    font: normal normal 900 100px/120px Avenir;
+    letter-spacing: 0px;
+    color: #5861AE;
+    text-transform: capitalize;
+    opacity: 1;
+}
+
+#posterSubheading {
+    left: 151px;
+    width: 335px;
+    height: 27px;
+    text-align: left;
+    font: normal normal normal 20px/26px Avenir;
+    letter-spacing: 0.8px;
+    color: #565657;
+    text-transform: capitalize;
+    opacity: 1;
+}
+
+#poster-q {
+    top: 602px;
+    left: 152px;
+    width: 189px;
+    height: 22px;
+    text-align: left;
+    font: normal normal normal 16px/26px Avenir;
+    letter-spacing: 0.64px;
+    color: #565657;
+    text-transform: capitalize;
+    opacity: 1;
+}
+
+#poster-btn {
+    top: 640px;
+    left: 152px;
+    width: 150px;
+    height: 50px;
+    border: 2px solid #4552C1;
+    border-radius: 4px;
+    opacity: 1;
+}

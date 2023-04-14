@@ -1,0 +1,33 @@
+#loginMainDiv {
+    top: 81px;
+    left: 730px;
+    width: 710px;
+    height: 769px;
+    background: #B9C0FD1A 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+#loginHeading {
+    top: 263px;
+    left: 860px;
+    width: 128px;
+    height: 44px;
+    text-align: left;
+    font: normal normal medium 32px/60px Avenir;
+    letter-spacing: 1.28px;
+    color: #4552C1;
+    text-transform: uppercase;
+    opacity: 1;
+}
+
+#loginForm div {
+    top: 372px;
+    left: 865px;
+    width: 322px;
+    height: 27px;
+    text-align: left;
+    font: normal normal normal 17px/27px Open Sans;
+    letter-spacing: 0.6px;
+    color: #77838F;
+    opacity: 1;
+}
